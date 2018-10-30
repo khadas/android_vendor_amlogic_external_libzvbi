@@ -2,7 +2,7 @@ LOCAL_PATH:= $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_SRC_FILES:= \
+src_files:= \
     tif_aux.c \
     tif_close.c \
     tif_codec.c \
@@ -41,6 +41,11 @@ LOCAL_SRC_FILES:= \
     tif_write.c \
     tif_zip.c
 
+
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES:= $(src_files)
+
 LOCAL_C_INCLUDES := \
   external/jpeg/ \
   external/zlib
@@ -59,3 +64,20 @@ LOCAL_PROPRIETARY_MODULE := true
 endif
 
 include $(BUILD_SHARED_LIBRARY)
+
+#####static lib####
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := $(src_files)
+
+
+LOCAL_C_INCLUDES := \
+  external/jpeg/ \
+  external/zlib \
+  external/libjpeg-turbo
+LOCAL_SHARED_LIBRARIES:= \
+  libjpeg
+LOCAL_STATIC_LIBRARIES := \
+  libz
+LOCAL_MODULE:= libtiff_static
+include $(BUILD_STATIC_LIBRARY)
