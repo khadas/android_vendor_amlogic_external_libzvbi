@@ -155,8 +155,13 @@ TIFFFdOpen(int fd, const char* name, const char* mode)
 {
 	TIFF* tif;
 
+	
 	tif = TIFFClientOpen(name, mode,
-	    (thandle_t) fd,
+		#ifdef ARM64_BIT
+	    (thandle_t) (long)fd,
+	    #else
+		(thandle_t) fd,
+		#endif
 	    _tiffReadProc, _tiffWriteProc,
 	    _tiffSeekProc, _tiffCloseProc, _tiffSizeProc,
 	    _tiffMapProc, _tiffUnmapProc);

@@ -46,6 +46,10 @@ include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES:= $(src_files)
 
+ifeq ($(ANDROID_BUILD_TYPE), 64)
+    LOCAL_CFLAGS += -DARM64_BIT
+endif
+
 LOCAL_C_INCLUDES := \
   external/jpeg/ \
   external/zlib
@@ -54,7 +58,7 @@ LOCAL_STATIC_LIBRARIES := \
   libz
 
 LOCAL_MODULE:= libtiff
-LOCAL_32_BIT_ONLY := true
+#LOCAL_32_BIT_ONLY := true
 
 LOCAL_SHARED_LIBRARIES:= \
   libjpeg
@@ -67,6 +71,10 @@ include $(BUILD_SHARED_LIBRARY)
 
 #####static lib####
 include $(CLEAR_VARS)
+
+ifeq ($(ANDROID_BUILD_TYPE), 64)
+    LOCAL_CFLAGS += -DARM64_BIT
+endif
 
 LOCAL_SRC_FILES := $(src_files)
 
